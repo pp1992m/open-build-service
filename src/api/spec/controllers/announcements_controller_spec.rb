@@ -48,28 +48,28 @@ RSpec.describe AnnouncementsController, type: :controller do
     it "returns a success response" do
       announcement
       get :index, params: {}, session: valid_session
-      expect(response).to be_successful
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET #show" do
     it "returns a success response" do
       get :show, params: {id: announcement.to_param}, session: valid_session
-      expect(response).to be_successful
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
       get :new, params: {}, session: valid_session
-      expect(response).to be_successful
+      expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET #edit" do
     it "returns a success response" do
       get :edit, params: {id: announcement.to_param}, session: valid_session
-      expect(response).to be_successful
+      expect(response).to have_http_status(:success)
     end
   end
 
@@ -90,7 +90,7 @@ RSpec.describe AnnouncementsController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
         post :create, params: invalid_attributes, session: valid_session
-        expect(response).not_to be_successful
+        expect(response).not_to have_http_status(:success)
       end
     end
   end
@@ -115,7 +115,7 @@ RSpec.describe AnnouncementsController, type: :controller do
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         put :update, params: {id: announcement.to_param, announcement: invalid_attributes}, session: valid_session
-        expect(response).to be_successful
+        expect(response).to have_http_status(:success)
       end
     end
   end
