@@ -7,7 +7,7 @@ class AnnouncementsController < ApplicationController
   #### Self config
 
   #### Callbacks macros: before_action, after_action, etc.
-  before_action :set_announcement, only: [:show, :edit, :update, :destroy]
+  before_action :set_announcement, only: [:show, :update, :destroy]
   # Pundit authorization policies control
   after_action :verify_authorized, :except => :index
   after_action :verify_policy_scoped, :only => :index
@@ -26,17 +26,6 @@ class AnnouncementsController < ApplicationController
     else
       skip_authorization
     end
-  end
-
-  # GET /announcements/new
-  def new
-    @announcement = Announcement.new
-    authorize @announcement
-  end
-
-  # GET /announcements/1/edit
-  def edit
-    authorize @announcement
   end
 
   # POST /announcements

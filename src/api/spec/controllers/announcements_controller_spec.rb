@@ -59,20 +59,6 @@ RSpec.describe AnnouncementsController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new, params: {}, session: valid_session
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe "GET #edit" do
-    it "returns a success response" do
-      get :edit, params: {id: announcement.to_param}, session: valid_session
-      expect(response).to have_http_status(:success)
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Announcement" do
