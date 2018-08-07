@@ -16,7 +16,7 @@ class AnnouncementsController < ApplicationController
 
   # GET /announcements
   def index
-    @announcements = policy_scope(Announcement)
+    @announcements = policy_scope(Announcement.all)
   end
 
   # GET /announcements/1

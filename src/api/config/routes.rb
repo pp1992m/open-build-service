@@ -44,8 +44,6 @@ OBSApi::Application.routes.draw do
   constraints(WebuiMatcher) do
     root 'webui/main#index'
 
-    resources :announcements
-
     controller 'webui/main' do
       get 'main/systemstatus' => :systemstatus
     end
@@ -448,6 +446,8 @@ OBSApi::Application.routes.draw do
     get '/' => 'main#index'
 
     resource :configuration, only: [:show, :update, :schedulers]
+
+    resources :announcements
 
     ### /person
     post 'person' => 'person#command'
