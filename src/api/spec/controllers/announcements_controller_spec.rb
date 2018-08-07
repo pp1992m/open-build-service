@@ -28,10 +28,8 @@ RSpec.describe AnnouncementsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Announcement. As you add validations to Announcement, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) do
-    {title: 'blah', content: 'blah'}
-  end
-
+  let(:valid_attributes) { attributes_for(:announcement) }
+  let(:announcement) { create(:announcement) }
   let(:invalid_attributes) {{ fake: 'blah' }}
 
   let(:admin) { create(:admin_user, login: 'admin') }
@@ -48,7 +46,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      Announcement.create! valid_attributes
+      announcement
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -56,7 +54,6 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      announcement = Announcement.create! valid_attributes
       get :show, params: {id: announcement.to_param}, session: valid_session
       expect(response).to be_successful
     end
@@ -71,7 +68,6 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   describe "GET #edit" do
     it "returns a success response" do
-      announcement = Announcement.create! valid_attributes
       get :edit, params: {id: announcement.to_param}, session: valid_session
       expect(response).to be_successful
     end
@@ -104,7 +100,6 @@ RSpec.describe AnnouncementsController, type: :controller do
       let(:new_attributes) { { title: 'blah blah', content: 'foo' } }
 
       it "updates the requested announcement" do
-        announcement = Announcement.create! valid_attributes
         put :update, params: {id: announcement.to_param }.merge(new_attributes), session: valid_session
         announcement.reload
         expect(announcement.title).to eq('blah blah')
@@ -112,7 +107,6 @@ RSpec.describe AnnouncementsController, type: :controller do
       end
 
       it "redirects to the announcement" do
-        announcement = Announcement.create! valid_attributes
         put :update, params: {id: announcement.to_param, announcement: valid_attributes}, session: valid_session
         expect(response).to redirect_to(announcement)
       end
@@ -120,7 +114,6 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        announcement = Announcement.create! valid_attributes
         put :update, params: {id: announcement.to_param, announcement: invalid_attributes}, session: valid_session
         expect(response).to be_successful
       end
@@ -128,15 +121,15 @@ RSpec.describe AnnouncementsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    let!(:announcement) { create(:announcement) }
+
     it "destroys the requested announcement" do
-      announcement = Announcement.create! valid_attributes
       expect {
         delete :destroy, params: {id: announcement.to_param}, session: valid_session
       }.to change(Announcement, :count).by(-1)
     end
 
     it "redirects to the announcements list" do
-      announcement = Announcement.create! valid_attributes
       delete :destroy, params: {id: announcement.to_param}, session: valid_session
       expect(response).to redirect_to(announcements_url)
     end
