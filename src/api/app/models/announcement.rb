@@ -17,6 +17,7 @@ class Announcement < ApplicationRecord
 
   #### Validations macros
 
+  validates :title, :content, presence: true
   #### Class methods using self. (public and then private)
 
   #### To define class methods as private use private_class_method

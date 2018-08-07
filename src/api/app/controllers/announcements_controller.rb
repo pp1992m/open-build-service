@@ -41,7 +41,7 @@ class AnnouncementsController < ApplicationController
 
   # POST /announcements
   def create
-    @announcement = Announcement.new(announcement_params)
+    @announcement = Announcement.new(title: params[:title], content: params[:content])
     authorize @announcement
     if @announcement.save
       redirect_to @announcement, notice: 'Announcement was successfully created.'
@@ -53,7 +53,7 @@ class AnnouncementsController < ApplicationController
   # PATCH/PUT /announcements/1
   def update
     authorize @announcement
-    if @announcement.update(announcement_params)
+    if @announcement.update(title: params[:title], content: params[:content])
       redirect_to @announcement, notice: 'Announcement was successfully updated.'
     else
       render :edit
