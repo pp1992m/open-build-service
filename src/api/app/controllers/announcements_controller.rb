@@ -1,18 +1,9 @@
 # TODO: Please overwrite this comment with something explaining the controller target
 class AnnouncementsController < ApplicationController
-  #### Includes and extends
-
-  #### Constants
-
-  #### Self config
-
-  #### Callbacks macros: before_action, after_action, etc.
   before_action :set_announcement, only: [:show, :update, :destroy]
   # Pundit authorization policies control
   after_action :verify_authorized, :except => :index
   after_action :verify_policy_scoped, :only => :index
-
-  #### CRUD actions
 
   # GET /announcements
   def index
@@ -23,8 +14,12 @@ class AnnouncementsController < ApplicationController
   def show
     if @announcement.present?
       authorize @announcement
+      respond_to do
+        format.xml
+      end
     else
-      skip_authorization
+      render_error message: "Unknown announcement",
+                   status: 404, errorcode: 'unknown_announcement'
     end
   end
 
@@ -33,7 +28,7 @@ class AnnouncementsController < ApplicationController
     @announcement = Announcement.new(announcement_params)
     authorize @announcement
     if @announcement.save
-      redirect_to @announcement, notice: 'Announcement was successfully created.'
+      render_ok
     else
       render :new
     end
@@ -43,9 +38,10 @@ class AnnouncementsController < ApplicationController
   def update
     authorize @announcement
     if @announcement.update(announcement_params)
-      redirect_to @announcement, notice: 'Announcement was successfully updated.'
+      render_ok
     else
-      render :edit
+      render_error message: @announcement.errors.full_messages,
+                   status: 400, errorcode: 'invalid_announcement'
     end
   end
 
@@ -53,7 +49,7 @@ class AnnouncementsController < ApplicationController
   def destroy
     authorize @announcement
     @announcement.destroy
-    redirect_to announcements_url, notice: 'Announcement was successfully destroyed.'
+    render_ok
   end
 
   #### Non CRUD actions
