@@ -34,11 +34,6 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   let(:admin) { create(:admin_user, login: 'admin') }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # AnnouncementsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
   before do 
     login admin 
   end
@@ -47,14 +42,14 @@ RSpec.describe AnnouncementsController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       announcement
-      get :index, params: {}, session: valid_session
+      get :index, params: {}
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET #show" do
     it "returns a success response" do
-      get :show, params: {id: announcement.to_param}, session: valid_session
+      get :show, params: {id: announcement.to_param}
       expect(response).to have_http_status(:success)
     end
   end
@@ -63,19 +58,19 @@ RSpec.describe AnnouncementsController, type: :controller do
     context "with valid params" do
       it "creates a new Announcement" do
         expect {
-          post :create, params: valid_attributes, session: valid_session
+          post :create, params: valid_attributes
         }.to change(Announcement, :count).by(1)
       end
 
       it "redirects to the created announcement" do
-        post :create, params: valid_attributes, session: valid_session
+        post :create, params: valid_attributes
         expect(response).to redirect_to(Announcement.last)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: invalid_attributes, session: valid_session
+        post :create, params: invalid_attributes
         expect(response).not_to have_http_status(:success)
       end
     end
@@ -86,21 +81,21 @@ RSpec.describe AnnouncementsController, type: :controller do
       let(:new_attributes) { { title: 'blah blah', content: 'foo' } }
 
       it "updates the requested announcement" do
-        put :update, params: {id: announcement.to_param }.merge(new_attributes), session: valid_session
+        put :update, params: {id: announcement.to_param }.merge(new_attributes)
         announcement.reload
         expect(announcement.title).to eq('blah blah')
         expect(response).to redirect_to(announcement)
       end
 
       it "redirects to the announcement" do
-        put :update, params: {id: announcement.to_param, announcement: valid_attributes}, session: valid_session
+        put :update, params: {id: announcement.to_param, announcement: valid_attributes}
         expect(response).to redirect_to(announcement)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        put :update, params: {id: announcement.to_param, announcement: invalid_attributes}, session: valid_session
+        put :update, params: {id: announcement.to_param, announcement: invalid_attributes}
         expect(response).to have_http_status(:success)
       end
     end
@@ -111,12 +106,12 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     it "destroys the requested announcement" do
       expect {
-        delete :destroy, params: {id: announcement.to_param}, session: valid_session
+        delete :destroy, params: {id: announcement.to_param}
       }.to change(Announcement, :count).by(-1)
     end
 
     it "redirects to the announcements list" do
-      delete :destroy, params: {id: announcement.to_param}, session: valid_session
+      delete :destroy, params: {id: announcement.to_param}
       expect(response).to redirect_to(announcements_url)
     end
   end
