@@ -44,6 +44,8 @@ OBSApi::Application.routes.draw do
   constraints(WebuiMatcher) do
     root 'webui/main#index'
 
+    resources :announcements
+
     controller 'webui/main' do
       get 'main/systemstatus' => :systemstatus
     end

@@ -1,3 +1,19 @@
+CREATE TABLE `announcements` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `content` text,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `announcements_users` (
+  `user_id` bigint(20) DEFAULT NULL,
+  `announcement_id` bigint(20) DEFAULT NULL,
+  KEY `index_announcements_users_on_user_id` (`user_id`),
+  KEY `index_announcements_users_on_announcement_id` (`announcement_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -1333,6 +1349,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20180307074538'),
 ('20180516074538'),
 ('20180523123532'),
-('20180720082742');
+('20180720082742'),
+('20180807114201');
 
 
