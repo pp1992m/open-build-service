@@ -19,6 +19,10 @@ class AnnouncementPolicy < ApplicationPolicy
     index?
   end
 
+  def destroy?
+    index?
+  end
+
   def update?
     index?
   end
