@@ -41,7 +41,7 @@ class AnnouncementsController < ApplicationController
 
   # POST /announcements
   def create
-    @announcement = Announcement.new(title: params[:title], content: params[:content])
+    @announcement = Announcement.new(announcement_params)
     authorize @announcement
     if @announcement.save
       redirect_to @announcement, notice: 'Announcement was successfully created.'
@@ -53,7 +53,7 @@ class AnnouncementsController < ApplicationController
   # PATCH/PUT /announcements/1
   def update
     authorize @announcement
-    if @announcement.update(params.slice(:title, :content).permit!.to_h)
+    if @announcement.update(announcement_params)
       redirect_to @announcement, notice: 'Announcement was successfully updated.'
     else
       render :edit
@@ -80,6 +80,6 @@ class AnnouncementsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def announcement_params
-      params.require(:announcement).permit(:title, :content)
+      params.slice(:title, :content).permit!
     end
 end
