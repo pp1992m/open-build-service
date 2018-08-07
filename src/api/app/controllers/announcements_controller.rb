@@ -53,7 +53,7 @@ class AnnouncementsController < ApplicationController
   # PATCH/PUT /announcements/1
   def update
     authorize @announcement
-    if @announcement.update(title: params[:title], content: params[:content])
+    if @announcement.update(params.slice(:title, :content).permit!.to_h)
       redirect_to @announcement, notice: 'Announcement was successfully updated.'
     else
       render :edit
