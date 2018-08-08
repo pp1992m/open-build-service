@@ -21,10 +21,6 @@ class Announcement < ApplicationRecord
   validates :title, :content, presence: true
   #### Class methods using self. (public and then private)
 
-  def self.create_from_xml(xml)
-    xml_hash = Xmlhash.parse(xml).with_indifferent_access
-    create(xml_hash.slice(:title, :content))
-  end
   #### To define class methods as private use private_class_method
   #### private
 
@@ -32,4 +28,5 @@ class Announcement < ApplicationRecord
   #### Instance methods (public and then protected/private)
 
   #### Alias of methods
+
 end
